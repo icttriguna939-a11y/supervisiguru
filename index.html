@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="Penilaian Supervisi Tenaga Pendidik SMA Triguna 1956 Jakarta — Pembelajaran Mendalam, Kurikulum Merdeka">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 40 40%27%3E%3Crect width=%2740%27 height=%2740%27 rx=%2712%27 fill=%27%233D6FE0%27/%3E%3Cpath d=%27M20 7 9 11v8c0 7 4.6 11.6 11 14 6.4-2.4 11-7 11-14v-8z%27 fill=%27none%27 stroke=%27%23fff%27 stroke-width=%272.2%27/%3E%3C/svg%3E">
+  <title>Supervisi Guru - SMA Triguna 1956</title>
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('sg_theme');
+        if (!t) t = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) { }
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=2.0.0">
+</head>
+<body>
+  <!-- Splash awal (hilang < 100 ms bila sesi tersimpan di perangkat) -->
+  <div id="splash" class="splash" role="status" aria-live="polite">
+    <div class="spinner"></div>
+    <p class="muted small">Memuat Supervisi Guru&hellip;</p>
+  </div>
+
+  <!-- Layar autentikasi (login / ganti password) -->
+  <section id="auth" class="auth" aria-label="Masuk"></section>
+
+  <!-- Aplikasi utama (SPA) -->
+  <div id="app" class="app">
+    <aside id="sidebar" class="sidebar" aria-label="Navigasi utama">
+      <div class="sb-brand" id="sbBrand"></div>
+      <nav class="sb-nav" id="sbNav"></nav>
+      <div class="sb-foot">
+        <div class="theme-row">
+          <span class="row" style="gap:8px"><span id="themeIcon"></span> Mode Gelap</span>
+          <button class="switch" id="themeSwitch" role="switch" aria-checked="false" aria-label="Mode gelap" data-act="toggleTheme"></button>
+        </div>
+        <button class="nav-item logout" data-act="logout"><span data-icon="logout"></span> Keluar</button>
+      </div>
+    </aside>
+    <div id="scrim" class="scrim" data-act="closeSidebar"></div>
+
+    <div class="main">
+      <header id="topbar" class="topbar">
+        <button class="icon-btn menu-btn" data-act="openSidebar" aria-label="Buka menu"><span data-icon="menu"></span></button>
+        <div class="tb-title"><div class="crumbs" id="crumbs"></div></div>
+        <div class="tb-right">
+          <span class="chip-sem" id="chipSem"></span>
+          <span class="chip-role" id="chipRole"></span>
+          <button class="me" id="meBtn" data-act="openMe" aria-label="Menu akun">
+            <span class="me-text" id="meText"></span>
+            <span class="avatar" id="meAvatar"></span>
+          </button>
+        </div>
+      </header>
+      <div id="offlineBar" class="offline-bar" role="status"></div>
+      <main id="content" class="content" tabindex="-1"></main>
+    </div>
+  </div>
+
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+  <div id="modalHost"></div>
+
+  <!-- Penjaga muat: bila JavaScript gagal, tampilkan penyebab (bukan loading tanpa akhir) -->
+  <script>
+    (function () {
+      var shown = false;
+      window.__sgFail = function (msg) {
+        if (shown) return; shown = true;
+        var sp = document.getElementById('splash'); if (!sp) return;
+        sp.innerHTML = '<div style="max-width:520px;text-align:center;padding:24px;font-family:Inter,system-ui,sans-serif">' +
+          '<div style="font-size:18px;font-weight:700;margin-bottom:8px">Aplikasi gagal dimuat</div>' +
+          '<div style="font-size:13px;opacity:.85;margin-bottom:14px;word-break:break-word">' + String(msg).replace(/</g, '&lt;') + '</div>' +
+          '<div style="font-size:12px;opacity:.65">Tekan <b>F5</b> (atau tarik layar ke bawah di HP) untuk memuat ulang. Bila berulang, periksa folder js/ sudah ikut ter-upload dan GAS_URL di js/config.js benar.</div></div>';
+      };
+      window.addEventListener('error', function (e) {
+        if (window.__SG_LOADED__) return;
+        var info = (e.message || 'Kesalahan skrip') + (e.lineno ? ' (baris ' + e.lineno + ', kolom ' + e.colno + ')' : '');
+        window.__sgFail(info);
+      });
+      setTimeout(function () { if (!window.__SG_LOADED__) window.__sgFail('Skrip aplikasi tidak termuat dalam 12 detik.'); }, 12000);
+    })();
+  </script>
+  <!-- Konfigurasi alamat server (isi GAS_URL) lalu modul aplikasi -->
+  <script src="js/config.js?v=2.0.0"></script>
+  <script src="js/core.js?v=2.0.0"></script>
+  <script src="js/app.js?v=2.0.0"></script>
+  <script src="js/penilai.js?v=2.0.0"></script>
+  <script src="js/guru.js?v=2.0.0"></script>
+  <script src="js/admin.js?v=2.0.0"></script>
+  <script src="js/boot.js?v=2.0.0"></script>
+</body>
+</html>
